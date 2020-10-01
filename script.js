@@ -3,24 +3,27 @@ const button = document.getElementById('button');
 
 async function selectMediaStream() {
     try {
-        //waiting to assign until user selects screem/window to share
+        //waiting to assign until user selects screem/window to share pop-up
         const mediaStream = await navigator.mediaDevices.getDisplayMedia();
         //passing that data into video object as its source
         videoElement.srcObject = mediaStream;
         //when video loads meta data then play
-        videoElement.onloadloadedmetadata = () => {
+        videoElement.onloadedmetadata = () => {
             videoElement.play();
         }
     } catch (error) {
-        console.log("Errorrr");
+        console.error("Error: Can't locate video");
     }
 }
 
 button.addEventListener('click', async () => {
+    // Disable Button
     button.disabled = true;
-    //start picture in picture
+    // Start Picture in Picture
     await videoElement.requestPictureInPicture();
+    // Reset Button
     button.disabled = false;
-})
+});
 
+// On Load
 selectMediaStream();
